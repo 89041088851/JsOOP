@@ -1,6 +1,10 @@
 function Car(containerId) {
+  // Bussiness logic layer
   this._engine = new Engine();
   this._gearBox = new GearBox();
+
+  // Utill logic
+  this._logger = new Logger();
 
   this._render(containerId);
 
@@ -19,10 +23,11 @@ Car.prototype = {
 
   // private methods
   _carStarted: function() {
-    console.log('ok');
+    this._logger.log('ok');
   },
   _carCannotBeStarted: function() {
-    console.log('ok');
+    this._logger.log('ok');
+    this._drawStatus('Car can`t be starteed. Try again!');
   },
     _render: function(containerId) {
     var container = document.getElementById(containerId);
@@ -40,5 +45,21 @@ Car.prototype = {
       </div>
     </div>
     `;
+
+    this._startButtons = document.getElementById(containerId).querySelectorAll('[data-role="start-car"]');
+    this._statusLabels = document.getElementById(containerId).querySelectorAll('[data-role="status"]');
+    this._gearBoxValueLabels = document.getElementById(containerId).querySelectorAll('[data-role="gear-box-value"]');
+  
+  },
+  _drawStatus: function(status) {
+    this._processEls(this._statusLabels, function (item) {
+      item.innerHTML = status;
+    });
+  },
+  _processEls: function(arrayOfEls, proccessor) {
+    for (var i = 0; i < arrayOfEls.length; i++) {
+      var item = arrayOfEls[i];
+      proccessor(item);
+    }
   }
 };
