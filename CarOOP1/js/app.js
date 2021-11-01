@@ -1,7 +1,7 @@
 (function () {
 
   var garage = document.getElementById('garage');
-  for (var i = 0; i < 7; i++) {
+  for (var i = 0; i < 1; i++) {
     var div = document.createElement('div');
     var id = 'car' + i;
     div.id = id;
