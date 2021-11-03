@@ -39,10 +39,16 @@ CarView.prototype = {
     });
   },
 
-  addEventListener: function(eventName, listener) {
+  addEventListener: function (eventName, listener) {
     if (eventName == 'start') {
       this._carStartedListeners.push(listener);
     }
+  },
+
+  onCarStarted: function () {
+    this._processEls(this._startButtons, function (item) {
+      item.disabled = true;
+    });
   },
 
   _processEls: function (arrayOfEls, proccessor) {

@@ -10,7 +10,7 @@ function Car(containerId) {
     that.start();
   });
 
-  // Utill logic
+  // Util logic
   this._logger = new Logger();
 
   //this._render(containerId);
@@ -21,11 +21,14 @@ function Car(containerId) {
 Car.prototype = {
   //interface
   start: function () {
-    var randomNumber = Math.random();
-    if (randomNumber > 0.5) {
-      this._carStarted();
+    var startResult = this._engine.start();
+    if (startResult) {
+      this._view.drawStatus('Car have started');
+      this._view.onCarStarted();
+      this._gearBox.start();
     } else {
-      this._carCannotBeStarted();
+      this._logger.log('Something wrong');
+      this._view.drawStatus('Car can`t be starteed. Try again!');  
     }
   },
 
