@@ -1,5 +1,5 @@
-function CarView(owner) {
-  this._owner = owner;
+function CarView() {
+  this._carStartedListeners = [];
 }
 
 CarView.prototype = {
@@ -39,6 +39,12 @@ CarView.prototype = {
     });
   },
 
+  addEventListener: function(eventName, listener) {
+    if (eventName == 'start') {
+      this._carStartedListeners.push(listener);
+    }
+  },
+
   _processEls: function (arrayOfEls, proccessor) {
     for (var i = 0; i < arrayOfEls.length; i++) {
       var item = arrayOfEls[i];
@@ -47,6 +53,9 @@ CarView.prototype = {
   },
 
   _carStartListener: function (ev) {
-    this._owner.start();
+    for (let i = 0; i < this._carStartedListeners.length; i++) {
+      var listener = this._carStartedListeners[i];
+      listener();
+    }
   }
 }
